@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix' => 'v2'], function () {
+  
+    Route::post('/register', [AuthController::class,'register']);
+    Route::post('/login', [AuthController::class,'login']);
+    Route::get('/login/google', [AuthController::class,'redirectToGoogle']);
+    Route::get('/login/google/callback', [AuthController::class,'handleGoogleCallback']);
+
 });
